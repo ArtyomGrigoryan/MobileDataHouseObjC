@@ -8,13 +8,15 @@
 
 #import "PhotosListCollectionViewController.h"
 
-@implementation PhotosListCollectionViewController
+@implementation PhotosListCollectionViewController {
+    FooterView *footerView;
+}
 
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+   
     footerView = [[FooterView alloc] init];
     
     NSString *tryAgainErrorMessage = @"Повторите попытку.";
@@ -25,18 +27,21 @@
     
     [_photosListCollectionViewViewModel fetchImages:^{
         [weakSelf.collectionView reloadData];
-    } failure:^(NSError * _Nonnull error) {
-        [weakSelf showAlertWithTitle:error.localizedDescription message:tryAgainErrorMessage];
+    } failure:^{
+        [weakSelf showAlertWithTitle:self->_photosListCollectionViewViewModel.error.localizedDescription message:tryAgainErrorMessage];
     }];
  
-    _photosListCollectionViewViewModel.getNextPage = ^(NSError *error) {
-        if (nil == error) {
-            [weakSelf.collectionView reloadData];
-        } else {
-            [weakSelf showAlertWithTitle:error.localizedDescription message:tryAgainErrorMessage];
-        }
+    _photosListCollectionViewViewModel.getNextPage = ^{
         __typeof(self)strongSelf = weakSelf;
-        [strongSelf->footerView hideLoader];
+        
+        if (strongSelf) {
+            if (nil == self->_photosListCollectionViewViewModel.error) {
+                [weakSelf.collectionView reloadData];
+            } else {
+                [weakSelf showAlertWithTitle:strongSelf->_photosListCollectionViewViewModel.error.localizedDescription message:tryAgainErrorMessage];
+            }
+            [strongSelf->footerView hideLoader];
+        }
     };
 }
 

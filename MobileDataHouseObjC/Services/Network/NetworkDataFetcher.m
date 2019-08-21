@@ -8,7 +8,9 @@
 
 #import "NetworkDataFetcher.h"
 
-@implementation NetworkDataFetcher
+@implementation NetworkDataFetcher {
+    NetworkService *networkService;
+}
 
 - (id)initWithNetworkService:(NetworkService *)networkService {
     if(self = [super init]) {

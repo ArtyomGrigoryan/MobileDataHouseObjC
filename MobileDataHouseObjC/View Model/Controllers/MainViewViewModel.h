@@ -6,7 +6,6 @@
 //  Copyright © 2019 Artyom Grigoryan. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "PhotosListCollectionViewViewModel.h"
 
 NS_ASSUME_NONNULL_BEGIN

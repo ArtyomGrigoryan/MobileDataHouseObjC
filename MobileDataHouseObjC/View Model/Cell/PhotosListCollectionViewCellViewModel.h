@@ -7,13 +7,10 @@
 //
 
 #import "../../Model/Image.h"
-#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PhotosListCollectionViewCellViewModel : NSObject {
-    Image *image;
-}
+@interface PhotosListCollectionViewCellViewModel : NSObject
 
 - (NSString *)getImageSmallUrl;
 - (id)initWithImage:(Image *)image;

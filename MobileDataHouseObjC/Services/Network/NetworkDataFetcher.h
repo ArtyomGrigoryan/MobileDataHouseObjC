@@ -11,13 +11,10 @@
 #import "../../Model/Image.h"
 #import "../API/APIParameters.h"
 #import "../API/ServerResponse.h"
-#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NetworkDataFetcher : NSObject {
-    NetworkService *networkService;
-}
+@interface NetworkDataFetcher : NSObject 
 
 - (id)initWithNetworkService:(NetworkService *)networkService;
 - (void)getPhotosWithUserQuery:(NSString *)query page:(NSString *)page success:(void(^)(NSMutableArray *))success failure:(void(^)(NSError *))failure;

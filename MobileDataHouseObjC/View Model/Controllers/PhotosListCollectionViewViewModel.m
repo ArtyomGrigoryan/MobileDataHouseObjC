@@ -8,7 +8,11 @@
 
 #import "PhotosListCollectionViewViewModel.h"
 
-@implementation PhotosListCollectionViewViewModel
+@implementation PhotosListCollectionViewViewModel {
+    NSInteger page;
+    NSMutableArray *images;
+    NetworkDataFetcher *fetcher;
+}
 
 // В конструкторе создадим и проинициализируем переменные для работы с сетью
 - (id)initWithUserQuery:(NSString *)query {
@@ -22,12 +26,13 @@
 }
 
 // Качаем картинки по запросу, который хранится в переменной userQuery
-- (void)fetchImages:(void (^)(void))success failure:(void (^)(NSError * _Nonnull))failure {
+- (void)fetchImages:(void (^)(void))success failure:(void (^)(void))failure {
     [fetcher getPhotosWithUserQuery:_userQuery page:@"1" success:^(NSMutableArray * _Nonnull data) {
         self->images = data;
         success();
     } failure:^(NSError * _Nonnull error) {
-        failure(error);
+        self->_error = error;
+        failure();
     }];
 }
 
@@ -36,9 +41,10 @@
     page += 1;
     [fetcher getPhotosWithUserQuery:_userQuery page:[@(page) stringValue] success:^(NSMutableArray * _Nonnull data) {
         [self->images addObjectsFromArray:data];
-        self->_getNextPage(nil);
+        self->_getNextPage();
     } failure:^(NSError * _Nonnull error) {
-        self->_getNextPage(error);
+        self->_error = error;
+        self->_getNextPage();
     }];
 }
 

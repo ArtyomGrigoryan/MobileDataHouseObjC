@@ -8,7 +8,9 @@
 
 #import "PhotosListCollectionViewCellViewModel.h"
 
-@implementation PhotosListCollectionViewCellViewModel 
+@implementation PhotosListCollectionViewCellViewModel {
+    Image *image;
+}
 
 - (id)initWithImage:(Image *)image {
     if(self = [super init]) {

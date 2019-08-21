@@ -8,7 +8,9 @@
 
 #import "MainViewController.h"
 
-@implementation MainViewController
+@implementation MainViewController {
+    MainViewViewModel *mainViewViewModel;
+}
 
 #pragma mark - View lifecycle
 
@@ -66,20 +68,20 @@
     CGRect kbRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbRect.size.height, 0.0);
     
-    self.scrollView.contentInset = contentInsets;
-    self.scrollView.scrollIndicatorInsets = contentInsets;
-    [self.scrollView scrollRectToVisible: _userQueryTextField.frame animated:YES];
+    _scrollView.contentInset = contentInsets;
+    _scrollView.scrollIndicatorInsets = contentInsets;
+    [_scrollView scrollRectToVisible: _userQueryTextField.frame animated:YES];
     
     if (@available(iOS 11.0, *)) {
-        self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        _scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     } else {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
 }
 
 - (void)kbDidHide:(NSNotification *)notification {
-    self.scrollView.contentInset = UIEdgeInsetsZero;
-    self.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
+    _scrollView.contentInset = UIEdgeInsetsZero;
+    _scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
 }
 
 - (void)hideKeyboard {
