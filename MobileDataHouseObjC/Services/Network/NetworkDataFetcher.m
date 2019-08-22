@@ -19,7 +19,7 @@
     return self;
 }
 
-- (void)getPhotosWithUserQuery:(NSString *)query page:(NSString *)page success:(void(^)(NSMutableArray *))success failure:(void(^)(NSError *))failure {
+- (void)getPhotosWithUserQuery:(NSString *)query page:(NSString *)page success:(void (^)(NSMutableArray *))success failure:(void (^)(NSError *))failure {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     
     [params setObject:API.perPage forKey:APIParameters.perPage];

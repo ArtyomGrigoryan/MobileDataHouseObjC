@@ -21,24 +21,27 @@
     
     NSString *tryAgainErrorMessage = @"Повторите попытку.";
     
-    [self.collectionView registerClass:FooterView.class forSupplementaryViewOfKind:UICollectionElementKindSectionFooter                withReuseIdentifier:NSStringFromClass([FooterView class])];
+    [self.collectionView registerClass:FooterView.class forSupplementaryViewOfKind:UICollectionElementKindSectionFooter     withReuseIdentifier:NSStringFromClass([FooterView class])];
     
     __weak __typeof(self)weakSelf = self;
     
     [_photosListCollectionViewViewModel fetchImages:^{
-        [weakSelf.collectionView reloadData];
+        __typeof(self)strongSelf = weakSelf;
+        if (strongSelf)
+            [strongSelf.collectionView reloadData];
     } failure:^{
-        [weakSelf showAlertWithTitle:self->_photosListCollectionViewViewModel.error.localizedDescription message:tryAgainErrorMessage];
+        __typeof(self)strongSelf = weakSelf;
+        if (strongSelf)
+            [strongSelf showAlertWithTitle:strongSelf->_photosListCollectionViewViewModel.error.localizedDescription message:tryAgainErrorMessage];
     }];
  
     _photosListCollectionViewViewModel.getNextPage = ^{
         __typeof(self)strongSelf = weakSelf;
-        
         if (strongSelf) {
-            if (nil == self->_photosListCollectionViewViewModel.error) {
-                [weakSelf.collectionView reloadData];
+            if (nil == strongSelf->_photosListCollectionViewViewModel.error) {
+                [strongSelf.collectionView reloadData];
             } else {
-                [weakSelf showAlertWithTitle:strongSelf->_photosListCollectionViewViewModel.error.localizedDescription message:tryAgainErrorMessage];
+                [strongSelf showAlertWithTitle:strongSelf->_photosListCollectionViewViewModel.error.localizedDescription message:tryAgainErrorMessage];
             }
             [strongSelf->footerView hideLoader];
         }
@@ -93,10 +96,11 @@
 
 - (IBAction)clearCacheBarButtonItemPressed:(UIBarButtonItem *)sender {
     __weak __typeof(self)weakSelf = self;
-    
     [[SDImageCache sharedImageCache] clearMemory];
     [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
-        [weakSelf showAlertWithTitle:@"Кэш очищен!" message:nil];
+        __typeof(self)strongSelf = weakSelf;
+        if (strongSelf)
+            [strongSelf showAlertWithTitle:@"Кэш очищен!" message:nil];
     }];
 }
 

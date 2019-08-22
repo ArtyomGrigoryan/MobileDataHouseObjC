@@ -27,24 +27,38 @@
 
 // Качаем картинки по запросу, который хранится в переменной userQuery
 - (void)fetchImages:(void (^)(void))success failure:(void (^)(void))failure {
+    __weak __typeof(self)weakSelf = self;
     [fetcher getPhotosWithUserQuery:_userQuery page:@"1" success:^(NSMutableArray * _Nonnull data) {
-        self->images = data;
-        success();
+        __typeof(self)strongSelf = weakSelf;
+        if (strongSelf) {
+            self->images = data;
+            success();
+        }
     } failure:^(NSError * _Nonnull error) {
-        self->_error = error;
-        failure();
+        __typeof(self)strongSelf = weakSelf;
+        if (strongSelf) {
+            self->_error = error;
+            failure();
+        }
     }];
 }
 
 // Качаем новые картинки по тому же самому запросу с других страниц (пейджинг)
 - (void)getNextPortion {
     page += 1;
+    __weak __typeof(self)weakSelf = self;
     [fetcher getPhotosWithUserQuery:_userQuery page:[@(page) stringValue] success:^(NSMutableArray * _Nonnull data) {
-        [self->images addObjectsFromArray:data];
-        self->_getNextPage();
+        __typeof(self)strongSelf = weakSelf;
+        if (strongSelf) {
+            [self->images addObjectsFromArray:data];
+            self->_getNextPage();
+        }
     } failure:^(NSError * _Nonnull error) {
-        self->_error = error;
-        self->_getNextPage();
+        __typeof(self)strongSelf = weakSelf;
+        if (strongSelf) {
+            self->_error = error;
+            self->_getNextPage();
+        }
     }];
 }
 

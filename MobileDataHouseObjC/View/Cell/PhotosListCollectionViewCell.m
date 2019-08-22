@@ -11,7 +11,8 @@
 @implementation PhotosListCollectionViewCell
 
 - (void)configureCell:(PhotosListCollectionViewCellViewModel *)collectionViewCellViewModel {
-    [_smallImageView sd_setImageWithURL:[NSURL URLWithString:[collectionViewCellViewModel getImageSmallUrl]] placeholderImage:[UIImage imageNamed:@"imagePlaceHolder"]];
+    [_smallImageView sd_setImageWithURL:[NSURL URLWithString:[collectionViewCellViewModel getImageSmallUrl]]
+                       placeholderImage:[UIImage imageNamed:@"imagePlaceHolder"]];
 }
 
 @end
