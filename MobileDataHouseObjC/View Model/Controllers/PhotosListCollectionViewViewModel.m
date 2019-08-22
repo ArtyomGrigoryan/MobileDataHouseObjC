@@ -31,13 +31,13 @@
     [fetcher getPhotosWithUserQuery:_userQuery page:@"1" success:^(NSMutableArray * _Nonnull data) {
         __typeof(self)strongSelf = weakSelf;
         if (strongSelf) {
-            self->images = data;
+            strongSelf->images = data;
             success();
         }
     } failure:^(NSError * _Nonnull error) {
         __typeof(self)strongSelf = weakSelf;
         if (strongSelf) {
-            self->_error = error;
+            strongSelf->_error = error;
             failure();
         }
     }];
@@ -50,14 +50,14 @@
     [fetcher getPhotosWithUserQuery:_userQuery page:[@(page) stringValue] success:^(NSMutableArray * _Nonnull data) {
         __typeof(self)strongSelf = weakSelf;
         if (strongSelf) {
-            [self->images addObjectsFromArray:data];
-            self->_getNextPage();
+            [strongSelf->images addObjectsFromArray:data];
+            strongSelf->_getNextPage();
         }
     } failure:^(NSError * _Nonnull error) {
         __typeof(self)strongSelf = weakSelf;
         if (strongSelf) {
-            self->_error = error;
-            self->_getNextPage();
+            strongSelf->_error = error;
+            strongSelf->_getNextPage();
         }
     }];
 }
