@@ -51,7 +51,7 @@
 #pragma mark - UIScrollView
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (scrollView.contentOffset.y > scrollView.contentSize.height / 1.4) {
+    if (scrollView.contentOffset.y > scrollView.contentSize.height / 1.9) {
         [self->footerView showLoader];
         [_photosListCollectionViewViewModel getNextPortion];
     }
